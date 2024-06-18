@@ -1,0 +1,29 @@
+{% extends "index_app/base.html" %}
+{% load static %}
+{% block title %}Network Planning{% endblock title %}
+{% block header %}Главная{% endblock header %}
+{% block content %}
+    <header>
+  <div class="page-header min-vh-100">
+    <div class="oblique position-absolute top-0 h-100 d-md-block d-none">
+      <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url({% static "main/img/curved-images/curved11.jpg" %})">
+          
+      </div>
+    </div>
+<div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-7 d-flex justify-content-center flex-column">
+          <h1 class="text-gradient text-primary">Добро пожаловать</h1>
+          <h1 class="mb-4">Сетевое управление и планирование</h1>
+          <p class="lead pe-5 me-5">Инстурументы для сетевого управления и планирования с использованием методов теории графов с нестандартной досижимостью </p>
+          <div class="buttons">
+            <button type="button" class="btn bg-gradient-primary mt-4">Начать</button>
+            <button type="button" class="btn text-primary shadow-none mt-4">Узнать больше</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+    
+{% endblock content %}
