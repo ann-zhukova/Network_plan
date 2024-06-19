@@ -6,10 +6,13 @@ from django.urls import reverse
 from django.http import HttpResponse
 from index_app.forms import UserRegisterForm, UserLoginForm
 from account.models import CustomUser
+from django.contrib.auth.models import Group
+
 
 # Create your views here.
 def index(request):
     return render(request, 'index_app/index.html')
+
 
 def register(request):
     if request.method == 'POST':
@@ -33,6 +36,8 @@ def register(request):
                                   context={"errors": ["User with this email already exists."]})
                 # Создание нового пользователя
                 new_user = CustomUser.objects.create_user(email=email, username=new_username, password=new_password)
+                group = Group.objects.get(name='Manager')
+                new_user.groups.add(group)
                 login(request, new_user)
                 # Перенаправление на страницу успеха.
                 return redirect(reverse('cabinet_index'))
@@ -43,6 +48,7 @@ def register(request):
                               context={"errors": ["User with this name already exists."]})
     else:
         return render(request, 'index_app/register.html')
+
 
 def auth(request):
     if request.method == 'POST':
@@ -55,11 +61,11 @@ def auth(request):
         if user is not None:
             login(request, user)
             # Перенаправление на страницу успеха.
-            return HttpResponse('Logged in successfully!')
+            return redirect(reverse('account_index'))
+            #return HttpResponse('Logged in successfully!')
         else:
             # Возврат сообщения об ошибке "неверный логин".
             return HttpResponse('Logged failed')
-            #return render(request, 'index_app/login.html', context={"errors": ["User with this name does not exist."]})
+            # return render(request, 'index_app/login.html', context={"errors": ["User with this name does not exist."]})
     else:
         return render(request, 'index_app/auth.html')
-

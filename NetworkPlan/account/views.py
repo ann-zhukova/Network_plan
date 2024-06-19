@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import Group
 from .models import CustomUser
 from rest_framework import permissions, viewsets
-
+from django.contrib.auth.decorators import login_required
 from .serializers import GroupSerializer, UserSerializer
 
 
@@ -22,3 +22,8 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all().order_by('name')
     serializer_class = GroupSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+
+@login_required(login_url='login')
+def index(request):
+    return render(request, 'account/main_projects.html')

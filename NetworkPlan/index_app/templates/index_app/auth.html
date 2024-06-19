@@ -13,7 +13,7 @@
                             <p class="mb-0">Введи имя пользователя и пароль</p>
                         </div>
                         <div class="card-body">
-                            <form role="form" action="login/" method="post">
+                            <form role="form" action="{% url 'login' %}" method="post">
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <input type="text" class="form-control form-control-lg" name = 'username' placeholder="Имя пользователя"
