@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import Group
-from .models import CustomUser
+from .models import Worker
 from rest_framework import permissions, viewsets
 from django.contrib.auth.decorators import login_required
 from .serializers import GroupSerializer, UserSerializer
@@ -10,7 +10,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = CustomUser.objects.all().order_by('-date_joined')
+    queryset = Worker.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
 

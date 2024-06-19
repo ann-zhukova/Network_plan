@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.urls import reverse
 from django.http import HttpResponse
 from index_app.forms import UserRegisterForm, UserLoginForm
-from account.models import CustomUser
+from account.models import Worker
 from django.contrib.auth.models import Group
 
 
@@ -26,16 +26,16 @@ def register(request):
             user = authenticate(request, username=new_username, password=new_password)
             # CustomUser.objects.
             if user is None:
-                count_name = CustomUser.objects.filter(username=new_username).count()
+                count_name = Worker.objects.filter(username=new_username).count()
                 if count_name != 0:
                     return render(request, 'index_app/register.html',
                                   context={"errors": ["User with this username already exists."]})
-                count_email = CustomUser.objects.filter(email=email).count()
+                count_email = Worker.objects.filter(email=email).count()
                 if count_email != 0:
                     return render(request, 'index_app/register.html',
                                   context={"errors": ["User with this email already exists."]})
                 # Создание нового пользователя
-                new_user = CustomUser.objects.create_user(email=email, username=new_username, password=new_password)
+                new_user = Worker.objects.create_user(email=email, username=new_username, password=new_password)
                 group = Group.objects.get(name='Manager')
                 new_user.groups.add(group)
                 login(request, new_user)

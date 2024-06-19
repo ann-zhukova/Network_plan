@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, Product, Stage, Project, Task, UserDoTask, Resource, TaskUseResource
+from .models import Worker, Department, Stage, Project, Task, UserDoTask, Resource, TaskUseResource
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
@@ -12,15 +12,15 @@ from .forms import CustomUserCreationForm, CustomUserChangeForm
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
-    model = CustomUser
-    list_display = ['email', 'username', ]
+    model = Worker
+    list_display = ['email', 'username', 'position', 'about_user', 'department']
 
 
-admin.site.register(CustomUser, CustomUserAdmin)
+admin.site.register(Worker, CustomUserAdmin)
 
 admin.site.register(Task)
 admin.site.register(Project)
-admin.site.register(Product)
+admin.site.register(Department)
 admin.site.register(Stage)
 admin.site.register(UserDoTask)
 admin.site.register(Resource)

@@ -3,29 +3,8 @@ from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
 
 
-class CustomUser(AbstractUser):
-    """пользователь"""
-
-    # Поля
-    about_user = models.CharField(max_length=200)
-    user_image = models.CharField(max_length=200)
-    position = models.CharField(max_length=200)
-
-    # Метаданные
-    class Meta:
-        ordering = ['-username']
-
-    # Methods
-    def get_absolute_url(self):
-        """Возвращает URL-адрес для доступа к определенному экземпляру MyModelName."""
-        return reverse('model-detail-view', args=[str(self.id)])
-
-    def __str__(self):
-        return str(self.username)
-
-
-class Product(models.Model):
-    """Продукт"""
+class Department(models.Model):
+    """Подразделение"""
 
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
@@ -41,6 +20,51 @@ class Product(models.Model):
         return 'product_' + self.name
 
 
+class Worker(AbstractUser):
+    """пользователь"""
+
+    # Поля
+    about_user = models.CharField(max_length=200)
+    user_image = models.CharField(max_length=200)
+    position = models.CharField(max_length=200)
+    department = models.ForeignKey(
+        Department,
+        null=True,
+        on_delete=models.CASCADE)
+
+    # Метаданные
+    class Meta:
+        ordering = ['-username']
+
+    # Methods
+    def get_absolute_url(self):
+        """Возвращает URL-адрес для доступа к определенному экземпляру MyModelName."""
+        return reverse('model-detail-view', args=[str(self.id)])
+
+    def __str__(self):
+        return str(self.username)
+
+
+class Project(models.Model):
+    """Проект"""
+
+    # Поля
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200, help_text='Введите название проекта')
+    description = models.TextField(blank=True, null=True)
+    start_date = models.DateField()  # дата начала работы
+    end_date = models.DateField(blank=True, null=True)  # дата начала работы
+
+    # Метаданные
+    class Meta:
+        ordering = ['-id']
+
+    # Methods
+    def __str__(self):
+        """Строка для представления объекта MyModelName (например, в административной панели и т.д.)."""
+        return 'project_' + self.name
+
+
 class Stage(models.Model):
     """Этап"""
     # Поля
@@ -50,8 +74,8 @@ class Stage(models.Model):
     start_date = models.DateField()  # дата начала работы
     end_date = models.DateField(blank=True, null=True)  # дата начала работы
     status = models.CharField(max_length=20)  # готова - в процессе - не начата
-    product = models.ForeignKey(
-        Product,
+    project = models.ForeignKey(
+        Project,
         on_delete=models.CASCADE,
     )
 
@@ -65,30 +89,6 @@ class Stage(models.Model):
         return 'stage_' + self.name
 
 
-class Project(models.Model):
-    """Проект"""
-
-    # Поля
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=200, help_text='Введите название проекта')
-    description = models.TextField(blank=True, null=True)
-    start_date = models.DateField()  # дата начала работы
-    end_date = models.DateField(blank=True, null=True)  # дата начала работы
-    stage = models.ForeignKey(
-        Stage,
-        on_delete=models.CASCADE,
-    )
-
-    # Метаданные
-    class Meta:
-        ordering = ['-id']
-
-    # Methods
-    def __str__(self):
-        """Строка для представления объекта MyModelName (например, в административной панели и т.д.)."""
-        return 'project_' + self.name
-
-
 class Task(models.Model):
     """Задачи в проекте """
 
@@ -99,8 +99,8 @@ class Task(models.Model):
     start_date = models.DateField()  # дата начала работы
     end_date = models.DateField(blank=True, null=True)
     status = models.CharField(max_length=100)  # готова - в процессе - не начата
-    project = models.ForeignKey(
-        Project,
+    stage = models.ForeignKey(
+        Stage,
         on_delete=models.CASCADE,
     )
 
@@ -119,7 +119,7 @@ class UserDoTask(models.Model):
 
     # Поля
     worker = models.ForeignKey(
-        CustomUser,
+        Worker,
         on_delete=models.CASCADE,
     )
     task = models.ForeignKey(
