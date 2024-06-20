@@ -1,9 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" itemscope itemtype="http://schema.org/WebPage">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <link rel="icon" type="image/png" href="{% static "dashboard/img/3c6d75e0-e9d5-4285-aa18-d82c007e658a.png"%}">
     <title>
         Network Planning
@@ -13,8 +14,8 @@
 
     <link href="{% static "dashboard/css/nucleo-icons.css"%}" rel="stylesheet" />
     <link href="{% static "dashboard/css/nucleo-svg.css"%}" rel="stylesheet" />
-    <link href="{% static 'dashboard/css/nucleo-svg.css'%}" rel="stylesheet" />
-    <link id="pagestyle" href="{% static "dashboard/css/soft-ui-dashboard.min.css?v=1.0.7"%}" rel="stylesheet" />
+    <link id="pagestyle" href="{% static "dashboard/css/soft-ui-dashboard.min.css"%}" rel="stylesheet" />
+
 
     <style>
         .async-hide {
@@ -22,7 +23,16 @@
         }
     </style>
 </head>
+
 <body class="g-sidenav-show  bg-gray-100">
+{% block include_sidebar %}
+        {% include "account/sidebar.html" %}
+    {% endblock %}
+ <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
     <div>{% block content%}{% endblock content %}</div>
+    {% block include_footer %}
+        {% include "account/footer.html" %}
+    {% endblock %}
+ </main>
 </body>
 </html>
