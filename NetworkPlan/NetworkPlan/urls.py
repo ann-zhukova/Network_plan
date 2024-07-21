@@ -29,5 +29,6 @@ urlpatterns = [
     path('account/', include('account.urls')),
     path('admin/', admin.site.urls),
     path('rest', include(router.urls)),
+    path('django_plotly_dash/', include('django_plotly_dash.urls')),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

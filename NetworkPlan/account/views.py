@@ -27,3 +27,8 @@ class GroupViewSet(viewsets.ModelViewSet):
 @login_required(login_url='login')
 def index(request):
     return render(request, 'account/main_projects.html')
+
+
+@login_required(login_url='login')
+def test(request):
+    return render(request, 'account/network_graph.html')

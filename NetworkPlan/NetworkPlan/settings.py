@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "account.apps.AccountConfig",
     'index_app.apps.IndexAppConfig',
     'rest_framework',
+    'django_plotly_dash.apps.DjangoPlotlyDashConfig'
 ]
 
 AUTH_USER_MODEL = 'account.Worker'
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_plotly_dash.middleware.BaseMiddleware',
 ]
 
 ROOT_URLCONF = 'NetworkPlan.urls'
@@ -136,3 +138,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
