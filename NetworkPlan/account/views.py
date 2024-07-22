@@ -32,3 +32,8 @@ def index(request):
 @login_required(login_url='login')
 def test(request):
     return render(request, 'account/network_graph.html')
+
+
+@login_required(login_url='login')
+def gantt(request):
+    return render(request, 'account/gantt.html')

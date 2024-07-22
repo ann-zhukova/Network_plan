@@ -1,0 +1,10 @@
+{% extends "account/base.html" %}
+{% load static %}
+{% load plotly_dash %}
+{% block title %}Network Planning{% endblock title %}
+{% block header %}Проекты{% endblock header %}
+{% block content %}
+    <div>
+        {% plotly_app name="Gantt" ratio=0.5 %}
+    </div>
+{% endblock content %}
