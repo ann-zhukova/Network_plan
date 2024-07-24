@@ -7,5 +7,7 @@ from . import gantt
 urlpatterns = [
     path('', views.index, name='account_index'),
     path('networkGraph', views.test, name='networkGraph'),
-    path('gantt', views.gantt, name='gantt')
+    path('gantt', views.gantt, name='gantt'),
+    path('departments', views.departments, name='departments'),
+    path('profile', views.profile, name='profile')
 ]

@@ -37,3 +37,11 @@ def test(request):
 @login_required(login_url='login')
 def gantt(request):
     return render(request, 'account/gantt.html')
+
+
+@login_required(login_url='login')
+def departments(request):
+    return render(request, 'account/departments.html')
+@login_required(login_url='login')
+def profile(request):
+    return render(request, 'account/profile.html')

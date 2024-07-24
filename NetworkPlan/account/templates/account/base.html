@@ -28,8 +28,14 @@
 {% block include_sidebar %}
         {% include "account/sidebar.html" %}
     {% endblock %}
+
  <main class="main-content position-relative max-height-vh-100 h-100 border-radius-lg ">
-    <div>{% block content%}{% endblock content %}</div>
+     {% block include_navbar %}
+        {% include "account/navbar.html"%}
+    {% endblock %}
+    <div class="container-fluid py-4">{% block content%}
+
+    {% endblock content %}</div>
     {% block include_footer %}
         {% include "account/footer.html" %}
     {% endblock %}
