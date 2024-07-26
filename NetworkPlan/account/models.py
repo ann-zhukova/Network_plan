@@ -17,7 +17,7 @@ class Department(models.Model):
     # Methods
     def __str__(self):
         """Строка для представления объекта MyModelName (например, в административной панели и т.д.)."""
-        return 'product_' + self.name
+        return 'department_' + self.name
 
 
 class Worker(AbstractUser):

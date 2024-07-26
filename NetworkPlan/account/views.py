@@ -4,7 +4,11 @@ from .models import Worker
 from rest_framework import permissions, viewsets
 from django.contrib.auth.decorators import login_required
 from .serializers import GroupSerializer, UserSerializer
+from django.contrib.auth.decorators import user_passes_test
+from django.http import HttpResponseForbidden
 
+def manager_required_group(user):
+    return user.groups.filter(name='Manager').exists()
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -38,10 +42,12 @@ def test(request):
 def gantt(request):
     return render(request, 'account/gantt.html')
 
-
-@login_required(login_url='login')
+@login_required(login_url='/login/')
+@user_passes_test(manager_required_group, login_url='account_index')
 def departments(request):
     return render(request, 'account/departments.html')
+
+
 @login_required(login_url='login')
 def profile(request):
     return render(request, 'account/profile.html')

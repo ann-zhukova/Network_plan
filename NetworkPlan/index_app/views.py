@@ -40,7 +40,7 @@ def register(request):
                 new_user.groups.add(group)
                 login(request, new_user)
                 # Перенаправление на страницу успеха.
-                return redirect(reverse('cabinet_index'))
+                return redirect(reverse('account_index'))
             else:
                 # Возврат сообщения об ошибке "такой пользователь существует".
 
