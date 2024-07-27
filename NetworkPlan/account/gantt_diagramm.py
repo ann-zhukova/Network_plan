@@ -7,22 +7,22 @@ import plotly.express as px
 DATA_TABLE_COLUMNS = [
     {
         "id": "Task",
-        "name": "Task",
+        "name": "Задач",
     },
     {
         "id": "Duration",
-        "name": "Days",
+        "name": "Дни",
         "type": "numeric",
     },
-    {"id": "Resource", "name": "Resource", "presentation": "dropdown"},
-    {"id": "Start", "name": "Start", "type": "datetime"},
-    {"id": "Finish", "name": "End", "type": "datetime", "editable": False},
+    {"id": "Resource", "name": "Ресурсы", "presentation": "dropdown"},
+    {"id": "Start", "name": "Дата начала", "type": "datetime"},
+    {"id": "Finish", "name": "Дата завершения", "type": "datetime", "editable": False},
 ]
 
 DATA_TABLE_STYLE = {
     "style_header": {
         "color": "white",
-        "backgroundColor": "#e9ecef",
+        "backgroundColor": "#cb0c9f",
     },
     "css": [
         {
@@ -65,9 +65,9 @@ app = Dash(
 
 app.layout = dbc.Container(
     [
-        html.H1("Project Time Line", className="bg-primary text-white p-1 text-center"),
+        html.H1("Время выполнения проекта", className="bg-primary text-white p-1 text-center"),
         dbc.Button(
-            "Add task", n_clicks=0, id="add-row-btn", size="sm", className="primary text-white"
+            "Добавить задачу", n_clicks=0, id="add-row-btn", size="sm", className="primary text-white"
         ),
         dash_table.DataTable(
             id="user-datatable",
@@ -99,7 +99,7 @@ def create_gantt_chart(updated_table_as_df):
         x_end="Finish",
         y="Task",
         color="Resource",
-        title="Project Plan Gantt Chart",
+        title="Диаграмма Ганта",
     )
 
     gantt_fig.update_layout(

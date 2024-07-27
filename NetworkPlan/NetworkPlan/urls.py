@@ -15,20 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from index_app import views
 from django.urls import include, path
-from account import views as acc_view
-from rest_framework import routers
 
-router = routers.DefaultRouter()
-router.register(r'users', acc_view.UserViewSet)
-router.register(r'groups', acc_view.GroupViewSet)
 
 urlpatterns = [
     path('', include('index_app.urls')),
     path('account/', include('account.urls')),
     path('admin/', admin.site.urls),
-    path('rest', include(router.urls)),
     path('django_plotly_dash/', include('django_plotly_dash.urls')),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

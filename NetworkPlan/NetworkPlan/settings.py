@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "account.apps.AccountConfig",
     'index_app.apps.IndexAppConfig',
-    'rest_framework',
     'django_plotly_dash.apps.DjangoPlotlyDashConfig'
 ]
 

@@ -5,27 +5,28 @@ from dash import html, dcc, Input, Output, dash_table, ctx
 from django_plotly_dash import DjangoDash
 import plotly.express as px
 
+external_stylesheets = ['https://fonts.googleapis.com/css2?family=Open+Sans&display=swap']
 
-app = DjangoDash('Gantt')
+app = DjangoDash('Gantt', external_stylesheets=external_stylesheets)
 DATA_TABLE_COLUMNS = [
     {
         "id": "Task",
-        "name": "Task",
+        "name": "Задача",
     },
     {
         "id": "Duration",
-        "name": "Days",
+        "name": "Дни",
         "type": "numeric",
     },
-    {"id": "Resource", "name": "Resource", "presentation": "dropdown"},
-    {"id": "Start", "name": "Start", "type": "datetime"},
-    {"id": "Finish", "name": "End", "type": "datetime", "editable": False},
+    {"id": "Resource", "name": "Ресурсы", "presentation": "dropdown"},
+    {"id": "Start", "name": "Дата начала", "type": "datetime"},
+    {"id": "Finish", "name": "Дата окончания", "type": "datetime", "editable": False},
 ]
 
 DATA_TABLE_STYLE = {
     "style_header": {
         "color": "white",
-        "backgroundColor": "#e9ecef",
+        "backgroundColor": "#cb0c9f",
     },
     "css": [
         {
@@ -42,15 +43,30 @@ new_task_line = {
     "Start": "2024-01-01",
     "Duration": 0,
     "Resource": "A",
-    "Finish": "2016-01-01",
+    "Finish": "2024-01-01",
 }
 df_new_task_line = pd.DataFrame(new_task_line, index=[0])
 
 app.layout = dbc.Container(
     [
-        html.H1("Project Time Line", className="bg-primary text-white p-1 text-center"),
+        html.H1("Выполнение проекта",
+                className="bg-primary text-white p-1 text-center",
+                style={'fontFamily': 'Open Sans, sans-serif', 'color':'#344767'}),
         dbc.Button(
-            "Add task", n_clicks=0, id="add-row-btn", size="sm", className="primary text-white"
+            "Добавить задачу",
+            n_clicks=0,
+            id="add-row-btn",
+            size="sm",
+            color="primary",
+            style={
+                'background-color': '#cb0c9f',
+                'border-color': '#cb0c9f',
+                'color': 'white',
+                'fontFamily': 'Open Sans, sans-serif',
+                'margin': '10px',
+                'borderRadius': '10px',
+                'padding': '10px 20px'
+            }
         ),
         dash_table.DataTable(
             id="user-datatable",
@@ -64,6 +80,7 @@ app.layout = dbc.Container(
                 },
             },
             css=DATA_TABLE_STYLE.get("css"),
+            style_cell={'fontFamily': 'Open Sans, sans-serif'},
             page_size=10,
             row_deletable=True,
             style_data_conditional=DATA_TABLE_STYLE.get("style_data_conditional"),
@@ -91,14 +108,14 @@ def create_gantt_chart(updated_table_as_df):
         x_end="Finish",
         y="Task",
         color="Resource",
-        title="Project Plan Gantt Chart",
+        title="Диаграмма Ганта",
     )
 
     gantt_fig.update_layout(
         title_x=0.5,
         font=dict(size=16),
         yaxis=dict(
-            title="Task",
+            title="Задача",
             automargin=True,
             autorange="reversed",
             categoryorder="array",
