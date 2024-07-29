@@ -2,6 +2,9 @@
 {% load static %}
 {% block title %}Network Planning{% endblock title %}
 {% block header %}Профиль{% endblock header %}
+{% block include_navbar %}
+    {% include "account/navbar.html" with title="Профиль" %}
+{% endblock %}
 {% block content %}
     <section class="py-sm-7 py-5 position-relative">
         <div class="container">
@@ -34,7 +37,7 @@
                                 </div>
                                 <div class="col-auto">
                                     <span class="h6">Подразделение</span>
-                                    <span>{{ user.department.name }}</span>
+
                                 </div>
                             </div>
                             <p class="text-lg mb-0">

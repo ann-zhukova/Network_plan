@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_plotly_dash.middleware.BaseMiddleware',
+    'rest_middleware.rest_middleware.TunnelingMethodMiddleware',
 ]
 
 ROOT_URLCONF = 'NetworkPlan.urls'

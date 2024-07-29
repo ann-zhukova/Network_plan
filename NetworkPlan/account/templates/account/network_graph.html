@@ -3,6 +3,9 @@
 {% load plotly_dash %}
 {% block title %}Network Planning{% endblock title %}
 {% block header %}Проекты{% endblock header %}
+{% block include_navbar %}
+    {% include "account/navbar.html" with title="Проект: Сетевой граф" %}
+{% endblock %}
 {% block content %}
     <div>
         {% plotly_app name="Test" ratio=0.5 %}

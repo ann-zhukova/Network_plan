@@ -2,10 +2,10 @@
 {% load static %}
 {% block title %}Network Planning{% endblock title %}
 {% block header %}Проекты{% endblock header %}
+{% block include_navbar %}
+    {% include "account/navbar.html" with title="Подразделения" %}
+{% endblock %}
 {% block content %}
-    <div class="card-header pb-0 px-3">
-        <h6 class="mb-0">Подразделения</h6>
-    </div>
     {% for department in departments %}
     <div class="card-body pt-4 p-3">
         <ul class="list-group">
@@ -40,6 +40,7 @@
                         <i class="fas fa-pencil-alt text-dark me-2" aria-hidden="true"></i>
                         Добавить сотрудника
                     </button>
+                   <!-- <input type="hidden" name="method" value="DELETE"> -->
                     <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="javascript:;"><i
                             class="far fa-trash-alt me-2"></i>Удалить</a>
                 </div>

@@ -27,10 +27,6 @@ class Worker(AbstractUser):
     about_user = models.CharField(max_length=200)
     user_image = models.CharField(max_length=200)
     position = models.CharField(max_length=200)
-    department = models.ForeignKey(
-        Department,
-        null=True,
-        on_delete=models.CASCADE)
 
     # Метаданные
     class Meta:
@@ -43,6 +39,31 @@ class Worker(AbstractUser):
 
     def __str__(self):
         return str(self.username)
+
+
+class Worker_in_department(models.Model):
+    """Задачи в проекте """
+
+    # Поля
+    worker = models.ForeignKey(
+        Worker,
+        on_delete=models.CASCADE,
+    )
+    department = models.ForeignKey(
+        Department,
+        on_delete=models.CASCADE,
+    )
+    role = models.CharField(max_length=200)
+
+    # Метаданные
+    class Meta:
+        unique_together = ['worker', 'department']
+        ordering = ['worker', 'department']
+
+    # Methods
+    def __str__(self):
+        """Строка для представления объекта MyModelName (например, в административной панели и т.д.)."""
+        return str(self.worker) + '_in_' + str(self.department)
 
 
 class Project(models.Model):
@@ -145,6 +166,10 @@ class Resource(models.Model):
     description = models.TextField(help_text='Описание задачи', blank=True, null=True)
     type = models.CharField(max_length=100, help_text='Задача', blank=True, null=True)  # дата начала работы
     is_working = models.BooleanField(default=False)
+    department = models.ForeignKey(
+        Department,
+        null=True,
+        on_delete=models.CASCADE)
 
     class Meta:
         ordering = ['-id']
@@ -177,3 +202,25 @@ class TaskUseResource(models.Model):
     def __str__(self):
         """Строка для представления объекта MyModelName (например, в административной панели и т.д.)."""
         return str(self.resource) + '_used_in_' + str(self.task)
+
+
+class Task_depends_on_task(models.Model):
+    first_task = models.ForeignKey(
+        Task,
+        on_delete=models.CASCADE,
+        related_name='first_task_dependencies'
+    )
+
+    second_task = models.ForeignKey(
+        Task,
+        on_delete=models.CASCADE,
+        related_name='second_task_dependencies'
+    )
+    class Meta:
+        unique_together = ['first_task', 'second_task']
+        ordering = ['first_task', 'second_task']
+
+    # Methods
+    def __str__(self):
+        """Строка для представления объекта MyModelName (например, в административной панели и т.д.)."""
+        return str(self.first_task) + '_depends_on_' + str(self.second_task)

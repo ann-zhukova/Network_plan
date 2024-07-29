@@ -9,5 +9,6 @@ urlpatterns = [
     path('networkGraph', views.test, name='networkGraph'),
     path('gantt', views.gantt, name='gantt'),
     path('departments', views.departments, name='departments'),
-    path('profile', views.profile, name='profile')
+    path('profile', views.profile, name='profile'),
+    path('stages/<int:object_id>/', views.stages, name='stages')
 ]
