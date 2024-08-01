@@ -4,7 +4,46 @@
 {% block title %}Network Planning{% endblock title %}
 {% block header %}Этапы проекта {% endblock header %}
 {% block include_navbar %}
-    {% include "account/navbar.html" with title="Проекты" %}
+    {% include "account/navbar.html" with title="Проект: этапы выполнения" %}
 {% endblock %}
 {% block content %}
+    <div class="container-fluid py-4" xmlns="http://www.w3.org/1999/html">
+        <br class="row">
+        {% for stage in stages %}
+            <div class="card">
+                <div class="card-body pt-2">
+                    <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">Этап </span>
+                    <a class="card-title h5 d-block text-darker">
+                        {{ stage.name }}
+                    </a>
+                    <p class="card-description mb-4">
+                        {{ stage.description }}
+                    </p>
+                    <div class="author align-items-center">
+                        <div class="name ps-3">
+                            <span>{{ stage.project }}</span>
+                            <div class="stats">
+                                <small>Дата начала {{ stage.start_date }}</small>
+                                <small>Дата начала {{ stage.end_date }}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+        {% endfor %}
+     {% if request.user|has_group:"Manager" or  request.user|has_group:"Planner"%}
+                <div class="row mt-4">
+                    <button
+                            type="button"
+                            id="openModalBtn"
+                            class="btn btn-primary"
+                            data-bs-toggle="modal"
+                            data-bs-target="#projectModal"
+                    >
+                        Добавить этап работы над проектом
+                    </button>
+                </div>
+            {% endif %}
+    </div>
 {% endblock content %}

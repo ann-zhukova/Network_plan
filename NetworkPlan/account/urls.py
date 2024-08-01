@@ -10,5 +10,6 @@ urlpatterns = [
     path('gantt', views.gantt, name='gantt'),
     path('departments', views.departments, name='departments'),
     path('profile', views.profile, name='profile'),
-    path('stages/<int:object_id>/', views.stages, name='stages')
+    path('stages/<int:object_id>/', views.stages, name='stages'),
+    path('send_email', views.send_email, name='send_email')
 ]

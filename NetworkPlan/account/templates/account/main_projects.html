@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-body pt-2">
                         <span class="text-gradient text-primary text-uppercase text-xs font-weight-bold my-2">Проект </span>
-                        <a href="javascript:;" class="card-title h5 d-block text-darker">
+                        <a href="{% url 'stages' object_id=project.project_id %}"  class="card-title h5 d-block text-darker">
                             {{ project.name }}
                         </a>
                         <p class="card-description mb-4">
@@ -28,16 +28,6 @@
                                 </div>
                             </div>
                         </div>
-                        {% for stage in project.stage_name %}
-                            <div class="author align-items-center">
-                            <div class="name ps-3">
-                                <span>Этап</span>
-                                <div class="stats">
-                                    <small> {{ stage }}</small>
-                                </div>
-                            </div>
-                        </div>
-                        {% endfor %}
                     </div>
                 </div>
             {% endfor %}

@@ -92,3 +92,18 @@ def profile(request):
         worker.user_image = user_image
         worker.save()
     return render(request, 'account/profile.html')
+
+from django.core.mail import send_mail
+
+
+def send_email():
+    # Ваш код для получения имени аккаунта и пароля пользователя
+
+    # Затем используйте функцию send_mail для отправки письма
+    send_mail(
+        'Subject here',
+        'Here is the message.',
+        'from@example.com',
+        ['anna.zhuk.dreamer@yandex.ru'],
+        fail_silently=False,
+    )

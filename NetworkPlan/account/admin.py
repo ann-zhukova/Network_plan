@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Department, Stage, Project, Task, UserDoTask, Resource, TaskUseResource, Worker_in_department
+from .models import Department, Stage, Project, Task, UserDoTask, Resource, TaskUseResource, Worker_in_department, Task_depends_on_task
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 
@@ -28,3 +28,4 @@ admin.site.register(Stage)
 admin.site.register(UserDoTask)
 admin.site.register(Resource)
 admin.site.register(TaskUseResource)
+admin.site.register(Task_depends_on_task)
