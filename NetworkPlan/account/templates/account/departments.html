@@ -96,13 +96,15 @@
     <!-- Модальное окно -->
     <div class="modal fade" id="workerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
+            <form role="form" action ="{% url 'send_email' %}" method="POST">
+                {% csrf_token %}
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Добавить сотрудника</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
                 </div>
                 <div class="modal-body">
-                    <form>
+
                         <input type="hidden" name="departmentId" id="departmentId">
                         <div class="form-group">
                             <label for="exampleFormControlInput1">Адрес электронной почты</label>
@@ -116,15 +118,16 @@
                             <option>Исполнитель</option>
                         </select>
                         </div>
-                </form>
+
             </div>
             <div class="modal-footer">
                 <button id="close" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть
                 </button>
-                <a herf="{% url 'send_email' %}" class="btn btn-primary">Пригласить</a>
+                <button class="btn btn-primary" type = "submit">Пригласить</button>
             </div>
 
         </div>
+                </form>
     </div>
         </div>
     <!-- Include jQuery library -->

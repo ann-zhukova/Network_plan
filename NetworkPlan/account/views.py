@@ -1,7 +1,10 @@
 from django.db.models import F
-from django.shortcuts import render
+import datetime
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import Group
-from .models import Worker, Department, Project, UserDoTask, Stage
+from django.urls import reverse
+
+from .models import Worker, Department, Project, UserDoTask, Stage, Task
 from rest_framework import permissions, viewsets
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
@@ -16,18 +19,31 @@ def manager_required_group(user):
 @login_required(login_url='login')
 def index(request):
     worker = request.user
-    projects = list(
-        UserDoTask.objects.
-        select_related('task').filter(worker=worker).
-        select_related('task__stage').
-        select_related('task__stage__project').
-        values(
-            project_id=F('task__stage__project_id'),
-            name=F('task__stage__project__name'),
-            description=F('task__stage__project__description'),
-            start_date=F('task__stage__project__start_date'),
-            end_date=F('task__stage__project__end_date')),
-    )
+    if request.method == 'POST':
+        name = request.POST['name']
+        description = request.POST['description']
+        project = Project.objects.create(name=name, description=description, start_date=datetime.date.today())
+        project.save()
+        stage = Stage.objects.create(name='создание', project=project, start_date=datetime.date.today())
+        stage.save()
+        task = Task.objects.create(name="coздание проекта", stage=stage, start_date=datetime.date.today())
+        task.save()
+        userdotask = UserDoTask.objects.create(worker=worker, task=task)
+        userdotask.save()
+        return redirect(reverse('account_index'))
+    else:
+        projects = list(
+            UserDoTask.objects.
+            select_related('task').filter(worker=worker).
+            select_related('task__stage').
+            select_related('task__stage__project').
+            values(
+                project_id=F('task__stage__project_id'),
+                name=F('task__stage__project__name'),
+                description=F('task__stage__project__description'),
+                start_date=F('task__stage__project__start_date'),
+                end_date=F('task__stage__project__end_date')),
+            )
     # projects_db = (UserDoTask.objects.
     #                select_related('task').
     #                filter(worker=worker).
@@ -45,7 +61,7 @@ def index(request):
     #                      'stages': [stage.name for stage in project.task__stage]
     #                      })
     # projects = list(Project.objects.all().values())
-    return render(request, 'account/main_projects.html', {"projects": projects})
+        return render(request, 'account/main_projects.html', {"projects": projects})
 
 
 @login_required(login_url='login')
@@ -95,15 +111,26 @@ def profile(request):
 
 from django.core.mail import send_mail
 
-
-def send_email():
+@login_required(login_url='login')
+def send_email(request):
+    if request.method == 'POST':
+        password = Worker.objects.make_random_password(length=8)
     # Ваш код для получения имени аккаунта и пароля пользователя
-
+        new_user = Worker.objects.create_user(
+        username='2',
+        email='-',
+        password=password)
+        new_user.save()
     # Затем используйте функцию send_mail для отправки письма
-    send_mail(
-        'Subject here',
-        'Here is the message.',
-        'from@example.com',
-        ['anna.zhuk.dreamer@yandex.ru'],
-        fail_silently=False,
-    )
+        send_mail(
+            'Вас пригласили',
+            f'Это тестовое письмо  '
+            f'Имя пользователя: {new_user.username}, '
+            f'Пароль: {password}',
+            '-',
+            [new_user.email],
+            fail_silently=False,
+         )
+        return HttpResponse("письмо отправлено")
+    else:
+        return HttpResponse("запрещен доступ")
